@@ -10,7 +10,7 @@ exports.up = function(knex) {
         .inTable("critics")
         .onDelete("cascade");
     table   
-        .forgign("movie_id")
+        .foreign("movie_id")
         .references("movie_id")
         .inTable("movies")
         .onDelete("cascade");
