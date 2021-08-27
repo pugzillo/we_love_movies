@@ -17,7 +17,7 @@ app.use((req, res, next) => {
 app.use((error, req, res, next) => {
     console.log(error);
     const { status = 500, message = "Something went wrong!"} = error; 
-    res.status.json({ error: message }); 
+    res.status(status).json({ error: message }); 
 });
 
 module.exports = app;
