@@ -8,6 +8,8 @@ exports.up = function(knex) {
       table.string("city");
       table.string("state");
       table.string("zip");
+      table.timestamp("created_at");
+      table.timestamp("updated_at");
   })
 };
 
