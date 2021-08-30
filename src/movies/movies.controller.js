@@ -6,7 +6,7 @@ async function movieExists(req, res, next) {
     res.locals.movie = movie;
     next();
   }
-  next({ status:400, message: `Movie cannot be found.`});
+  next({ status:404, message: `Movie cannot be found.`});
 }
 
 async function list(req, res, next) {
@@ -15,7 +15,7 @@ async function list(req, res, next) {
 }
 
 async function read(req, res, next) {
-  const data = await moviesService.read(req.params.movieId);
+  const { movie: data } = res.locals;
   res.json({ data }); 
 }
 
