@@ -19,7 +19,13 @@ async function update(req, res) {
   res.json({ data });
 }
 
+async function destroy(req, res) {
+  const { review } = res.locals;
+  await reviewsService.delete(review.review_id);
+  res.sendStatus(204);
+}
+
 module.exports = {
   update: [reviewExists, update],
-  delete: [reviewExists], 
+  delete: [reviewExists, destroy],
 };
