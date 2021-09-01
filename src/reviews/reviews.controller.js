@@ -15,10 +15,11 @@ async function update(req, res) {
     review_id: res.locals.review.review_id,
   };
   const data = await reviewsService.update(updatedReview);
-  data.critics = await reviewsService.readCritics(data);
+  data.critic = await reviewsService.readCritics(data.critic_id);
   res.json({ data });
 }
 
 module.exports = {
   update: [reviewExists, update],
+  delete: [reviewExists], 
 };
