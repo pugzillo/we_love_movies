@@ -25,7 +25,13 @@ async function destroy(req, res) {
   res.sendStatus(204);
 }
 
+async function list(req, res) {
+  const data = await reviewsService.list();
+  res.json({ data });
+}
+
 module.exports = {
   update: [reviewExists, update],
   delete: [reviewExists, destroy],
+  list, 
 };

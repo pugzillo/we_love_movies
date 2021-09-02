@@ -27,9 +27,14 @@ function destroy(review_id) {
   return knex("reviews").where({ review_id }).del();
 }
 
+function list() {
+  return knex("reviews").select("*");
+}
+
 module.exports = {
   update,
   read,
   readCritics,
   delete: destroy, 
+  list, 
 };

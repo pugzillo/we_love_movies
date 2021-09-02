@@ -2,6 +2,8 @@ const router = require("express").Router({ mergeParams: true });
 const controller = require("./reviews.controller");
 const methodNotAllowed = require("../errors/methodNotAllowed");
 
+router.route("/").get(controller.list); 
+
 router
   .route("/:reviewId([0-9]+)")
   .put(controller.update)
