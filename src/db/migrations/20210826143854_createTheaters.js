@@ -1,4 +1,4 @@
-
+// schema for theaters
 exports.up = function(knex) {
   return knex.schema.createTable("theaters", (table) => {
       table.increments('theater_id').primary();
@@ -8,7 +8,7 @@ exports.up = function(knex) {
       table.string("city");
       table.string("state");
       table.string("zip");
-      table.timestamp(true, true); 
+      table.timestamp(true, true); // created_at & updated_at timestamps
   })
 };
 

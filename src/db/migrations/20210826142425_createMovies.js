@@ -1,4 +1,4 @@
-
+// Set up schema for movies table
 exports.up = function(knex) {
   return knex.schema.createTable("movies", (table) => {
       table.increments("movie_id").primary();
@@ -7,7 +7,7 @@ exports.up = function(knex) {
       table.string("rating");
       table.text("description");
       table.string("image_url");
-      table.timestamp(true, true); 
+      table.timestamp(true, true); // created_at & updated_at fields
   })
 };
 

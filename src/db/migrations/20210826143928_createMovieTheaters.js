@@ -1,19 +1,20 @@
+// schema set up for movie theaters
 exports.up = function (knex) {
   return knex.schema.createTable("movies_theaters", (table) => {
-    table.integer("movie_id").unsigned().notNullable();
+    table.integer("movie_id").unsigned().notNullable(); // foreign key from movies
     table
       .foreign("movie_id")
       .references("movie_id")
       .inTable("movies")
       .onDelete("CASCADE");
-    table.integer("theater_id").unsigned().notNullable();
+    table.integer("theater_id").unsigned().notNullable(); // foreign key from theaters
     table
       .foreign("theater_id")
       .references("theater_id")
       .inTable("theaters")
       .onDelete("CASCADE");
     table.boolean("is_showing");
-    table.timestamp(true, true); 
+    table.timestamp(true, true); // created_at & updated_at timestamps
   });
 };
 
