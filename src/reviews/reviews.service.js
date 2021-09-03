@@ -15,8 +15,8 @@ function update(updatedReview) {
       return knex("reviews")
         .select("*")
         .where({ review_id: parseInt(updatedReview.review_id) })
-        .first()
-  });
+        .first();
+    });
 }
 
 function read(review_id) {
@@ -27,14 +27,29 @@ function destroy(review_id) {
   return knex("reviews").where({ review_id }).del();
 }
 
-function list() {
-  return knex("reviews").select("*");
+function list(movie_id) {
+  if (movie_id) {
+    return knex("reviews as r")
+      .where({ movie_id })
+      .select("r.*")
+      .then((reviews) => {
+        return knex("critics as c")
+          .join("reviews as r", "c.critic_id", "r.critic_id")
+          .where({ movie_id })
+          .select("c.*")
+          .then((critics) => ({
+            critics,
+            reviews
+          }))
+      })
+  }
+  return knex("reviews").select("*").then((reviews) => ({ critics: [], reviews }));
 }
 
 module.exports = {
   update,
   read,
   readCritics,
-  delete: destroy, 
-  list, 
+  delete: destroy,
+  list,
 };

@@ -26,12 +26,14 @@ async function destroy(req, res) {
 }
 
 async function list(req, res) {
-  const data = await reviewsService.list();
-  res.json({ data });
+  const { movieId } = req.params;
+  const { critics, reviews } = await reviewsService.list(movieId);
+  reviews.forEach((review) => review.critic = critics.find(c => c.critic_id === review.critic_id));
+  res.json({ data: reviews });
 }
 
 module.exports = {
   update: [reviewExists, update],
   delete: [reviewExists, destroy],
-  list, 
+  list,
 };
