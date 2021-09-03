@@ -1,6 +1,7 @@
 const knex = require("../db/connection");
 
 function readCritics(critic_id) {
+  // returns filtered critic fields
   return knex("critics")
     .where({ critic_id: parseInt(critic_id) })
     .select("*")
@@ -8,6 +9,7 @@ function readCritics(critic_id) {
 }
 
 function update(updatedReview) {
+  // updates review and then return the updated review
   return knex("reviews")
     .where({ review_id: parseInt(updatedReview.review_id) })
     .update(updatedReview, ["content", "review_id"])
@@ -29,6 +31,7 @@ function destroy(review_id) {
 
 function list(movie_id) {
   if (movie_id) {
+    // returns both a critics and reviews tables to be formatted in controller
     return knex("reviews as r")
       .where({ movie_id })
       .select("r.*")
@@ -39,11 +42,13 @@ function list(movie_id) {
           .select("c.*")
           .then((critics) => ({
             critics,
-            reviews
-          }))
-      })
+            reviews,
+          }));
+      });
   }
-  return knex("reviews").select("*").then((reviews) => ({ critics: [], reviews }));
+  return knex("reviews")
+    .select("*")
+    .then((reviews) => ({ critics: [], reviews }));
 }
 
 module.exports = {
