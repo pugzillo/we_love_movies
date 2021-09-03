@@ -2,6 +2,7 @@ const { reduce } = require("lodash");
 const knex = require("../db/connection");
 const reduceProperties = require("../utils/reduce-properties");
 
+// set up schema for list (values will be nested in movies columns)
 const reduceMovies = reduceProperties("theater_id", {
     movie_id: ["movies", null, "movie_id"],
     title: ["movies", null, "title"],
@@ -16,17 +17,19 @@ const reduceMovies = reduceProperties("theater_id", {
 
 function list(movie_id) {
   if (movie_id) {
+    // theaters playing a specific movie if movie_id is defined
     return knex("theaters as t")
     .join("movies_theaters as mt", "t.theater_id", "mt.theater_id")
     .join("movies as m", "mt.movie_id", "m.movie_id")
     .where({ "mt.movie_id" : movie_id})
     .select("t.*");
   }
+  // list all movies playing at all theaters
   return knex("theaters as t")
     .join("movies_theaters as mt", "t.theater_id", "mt.theater_id")
     .join("movies as m", "mt.movie_id", "m.movie_id")
     .select("t.*", "mt.*", "m.*")
-    .then(reduceMovies);
+    .then(reduceMovies); // nest fields in movies
 }
 
 module.exports = {
