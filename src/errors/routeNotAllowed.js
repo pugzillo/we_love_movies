@@ -1,3 +1,4 @@
+// route not allowed handler
 function routeNotAllowed(req, res, next) {
     next({
         status: 404,

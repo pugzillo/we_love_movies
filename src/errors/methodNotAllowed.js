@@ -1,3 +1,4 @@
+// method not allowed handler
 function methodNotAllowed(req, res, next) {
     next({
         status: 405,
